@@ -16,7 +16,7 @@
         <div class="alert alert-info alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <p style="font-size:15px">
-            <i class="icon fa fa-user"></i> Bienvenido <strong><?php echo $_SESSION['user']; ?></strong>
+            <i class="icon fa fa-user"></i> Bienvenido ></strong>
           </p>
         </div>
       </div>

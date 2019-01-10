@@ -6,19 +6,15 @@ if(!isset($_SESSION["user"]))
 }
 ?>
 
-<?php
-include('db.php');
-?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Panel de administración| Facturación Web</title>
-  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
+  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="description" content="Perfil de la empresa"/>
+  <meta name="description" content="Perfil de la empresa">
 
   <!-- favicon -->
   <link rel="shortcut icon" href="../images/favicon.png" />
@@ -124,7 +120,7 @@ include('db.php');
           </li>
 
           <li class="active">
-            <a href="view.php"><i class="fa fa-search"></i> Consultar Habitaciones</a>
+            <a href="view.php"><i class="fa fa-search"></i> Consultar Reserva</a>
           </li>
 
           <li class="active">
@@ -136,111 +132,116 @@ include('db.php');
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
+	         <!-- Content Header (Page header) -->
       <section class="content-header">
-      <h1>
-        <i class="fa fa-desktop icon-title"></i> LISTA DE HABITACIONES
-      </h1>
-    </section>
-
-
-
-
-
+        <h1>
+          <i style="margin-right:7px" class="fa fa-edit"></i> Agregar Habitación
+        </h1>
+      </section>
 
 
       <!-- Main content -->
+
       <section class="content">
         <div class="row">
           <div class="col-md-12">
-
-
-            <?php
-                // funciÃ³n para mostrar mensajes
-                if (empty($_GET['alert'])) {
-                  echo "";
-                }
-
-
-                // Mensaje para Eliminar portafolio
-    elseif ($_GET['alert'] == 3) {
-      echo "<div class='alert alert-success alert-dismissable'>
-              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4>  <i class='icon fa fa-check-circle'></i> Bien hecho!</h4>
-              El portafolio ha sido eliminado exitosamente.
-            </div>";
-    }
-    ?>
-
-
-
-
-
-
-
-
-
             <div class="box box-primary">
-              <table id="dataTables1" class="table table-bordered table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th class="center">No.</th>
-                    <th class="center">Estado</th>
-                    <th class="center">Nombre</th>
-                    <th class="center">Servicios</th>
-                    <th class="center">NoCamas</th>
-                    <th class="center">Editar/Eliminar</th>
+              <!-- form start -->
+
+                <?php
+
+                  $con = mysqli_connect("localhost","root","","hotel") or die(mysql_error());
+
+                  // data insert code starts here.
+
+                  if(isset($_POST['add'])){
+				$estadoid		     = mysqli_real_escape_string($con,(strip_tags($_POST["cbnEstado"],ENT_QUOTES)));//Escanpando caracteres
+				$nombres	 = mysqli_real_escape_string($con,(strip_tags($_POST["txtNombre"],ENT_QUOTES)));//Escanpando caracteres
+				$sevicios	 = mysqli_real_escape_string($con,(strip_tags($_POST["txtServicios"],ENT_QUOTES)));//Escanpando caracteres
+				$camas	     = mysqli_real_escape_string($con,(strip_tags($_POST["txtCamas"],ENT_QUOTES)));//Escanpando caracteres
+						$insert = mysqli_query($con, "INSERT INTO habitacion(ESTA_ID,
+              HABI_NOMBRE, HABI_SERVICIOS, HABI_NCAMAS)
+															VALUES('$estadoid','$nombres','$sevicios','$camas')") or die(mysqli_error());
+						if($insert){
+							echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Bien hecho! Los datos han sido guardados con Éxito.
+
+              </div>';
+						}else{
+							echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error. No se pudo guardar los datos !</div>';
+						}
+			}
+      ?>
+      <form class="form-horizontal" action="" method="post">
 
 
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  //$con = mysqli_connect("localhost","root","","hotel") or die(mysql_error());
+
+                <div class="box-body">
+                  <div class="form-group">
+                    <label class="col-sm-1 control-label">Nombre</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="txtNombre" required>
+                    </div>
+                  </div>
+
+                  <br>
+
+                  <div class="form-group">
+                    <label class="col-sm-1 control-label">Servicios</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="txtServicios" required>
+                    </div>
+                  </div>
+
+                  <br>
+
+                  <div class="form-group">
+                    <label class="col-sm-1 control-label">NoCamas</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="txtCamas" required>
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group">
+                    <label class="col-sm-1 control-label">Estado </label>
+                    <div class="col-sm-8">
+                      <select name="cbnEstado" class="form-control">
+                          <option value=""> Seleccione estado </option>
+                           <option value="1">Disponible</option>
+							             <option value="2">Reservado</option>
+                      </select>
+                    </div>
+                  </div>
+                </div><!-- /.box body -->
+
+                <div class="box-footer">
+                  <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-11">
+                      <input type="submit" name="add" class="btn btn-sm btn-primary" value="Guardar datos">
+
+                      <a href="view.php" class="btn btn-sm btn-danger">Cancelar</a>
+
+                    </div>
+                  </div>
+                </div><!-- /.box footer -->
+              </form>
+            </div><!-- /.box -->
+          </div><!--/.col -->
+        </div>   <!-- /.row -->
+      </section><!-- /.content -->
 
 
 
 
 
 
-                   $query = mysqli_query($con, "SELECT * from habitacion INNER JOIN estado on habitacion.ESTA_ID=estado.ESTA_ID")
-                   or die('Hubo un error en la consulta de los datos: '.mysqli_error($con));
 
 
-                  $no = 1;
 
-                  // tampilkan data
-                  while ($data = mysqli_fetch_assoc($query)) {
-                    // Mostrar contenido de la tabla desde la base de datos a la tabla en la aplicación
-                    echo "<tr>
-                    <td width='20' class='center'>$no</td>
-                    <td width='30'>$data[ESTA_NOMBRE]</td>
-                    <td width='30'>$data[HABI_NOMBRE]</td>
-                    <td width='120'>$data[HABI_SERVICIOS]</td>
-                    <td width='30'>$data[HABI_NCAMAS]</td>
-                    <td class='center' width='70'>
-                    <div>
-                    <a data-toggle='tooltip' data-placement='top' title='Editar' style='margin-right:5px' class='btn btn-primary btn-sm' href='edit.php?nik=$data[HABI_ID]'>
-                    <i style='color:#fff' class='glyphicon glyphicon-edit'></i>
-                    </a>";
 
-?>
-                    <a data-toggle="tooltip" data-placement="top" title="Eliminar" class="btn btn-danger btn-sm" href="proses.php?act=delete&id=<?php echo $data['HABI_ID'];?>" onclick="return confirm('Estas seguro que quieres eliminar <?php echo $data['HABI_NOMBRE']; ?> ?');">
-                    <i style="color:#fff" class="glyphicon glyphicon-trash"></i>
-                    </a>
 
-                    <?php
-                    echo " </div>
-                    </td>
-                    </tr>";
-                    $no++;
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div><!-- /.box-body -->
-          </div><!-- /.box -->
-        </div><!--/.col -->
-      </section>
 
       <div class="modal fade" id="logout">
         <div class="modal-dialog">

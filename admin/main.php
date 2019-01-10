@@ -10,7 +10,7 @@ if(!isset($_SESSION["user"]))
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Panel de administración| Facturación Web</title>
+  <title>Panel de administración| HotelSite Web</title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="description" content="Perfil de la empresa">
@@ -115,7 +115,7 @@ if(!isset($_SESSION["user"]))
           </li>
 
           <li class="active">
-            <a href="nhabit.php"><i class="fa fa-pencil"></i> Crear Nueva Habitación</a>
+            <a href="add.php"><i class="fa fa-pencil"></i> Crear Nueva Habitación</a>
           </li>
 
           <li class="active">

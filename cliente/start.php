@@ -89,34 +89,38 @@ include('../db.php');
 			<div class= "row">
 				<div class="col-md-6">
 					<P><br>
-						<H1>PRESENTACIÓN</H1></p></br>
+						<H1 style=color:darkblue;>PRESENTACIÓN</H1></p></br>
 						<DIV ALIGN="justify"><P>
 							Situado en el casco histórico de San Vicente de la Sonsierra, en la cuesta de subida al castillo y a la iglesia de Santa María la Mayor.
 							El hotel, inaugurado en julio de 2008, está situado en la comarca de la Sonsierra (Rioja Alta), donde casi el 100% de la población se dedica al cultivo de la vid y a la elaboración de los mejores vinos de Rioja.
 
-							<p>Los dueños, una joven pareja con amplia experiencia en el sector hostelero, han rehabilitado un edificio tradicional para convertirlo en una oferta turística dedicada al enoturismo.
+							<p><br>Los dueños, una joven pareja con amplia experiencia en el sector hostelero, han rehabilitado un edificio tradicional para convertirlo en una oferta turística dedicada al enoturismo.
+<dl>
+								<p><br><dt>Distancias con las principales ciudades de los alrededores:</p></dt>
+								<ol type=square>
 
-								Distancias con las principales ciudades de los alrededores:
+								<li>Logroño a 40 km: 30 min por carretera</li>
+								<li>Bilbao a 90 km: 1 hora por carretera</li>
+								<li>Burgos a 101 km: 1 hora por carretera</li>
+								<li>Zaragoza a 209 km: 2 horas por carretera</li>
+							</ol>
 
-								Logroño a 40 km: 30 min por carretera
-								Bilbao a 90 km: 1 hora por carretera
-								Burgos a 101 km: 1 hora por carretera
-								Zaragoza a 209 km: 2 horas por carretera
-								Ven a visitarnos y disfruta con nosotros de este lugar tranquilo y encantador.
+</dl>
+								<p><br>Ven a visitarnos y disfruta con nosotros de este lugar tranquilo y encantador.
 
-								<P>Este hotel de tres estrellas dispone de 51 habitaciones, y una suite junior con terraza con vistas al monasterio y la sierra, todas ellas con un toque distintivo y personal, equipadas con aire acondicionado, baño, ducha, televisión, teléfono, y conexión WIFI de calidad superior para garantizar su confort. Además, disponen de caja fuerte de seguridad y mini bar a petición de uso personal.
+								<P><br>Este hotel de tres estrellas dispone de 51 habitaciones, y una suite junior con terraza con vistas al monasterio y la sierra, todas ellas con un toque distintivo y personal, equipadas con aire acondicionado, baño, ducha, televisión, teléfono, y conexión WIFI de calidad superior para garantizar su confort. Además, disponen de caja fuerte de seguridad y mini bar a petición de uso personal.
 
 								Todo ello, unido a la excelencia gastronómica que nos caracteriza, hará de su estancia una experiencia inolvidable.
 								En nuestra cafetería usted podrá disfrutar de nuestro famoso y tradicional chocolate con picatostes, de gran prestigio nacional.
 
-								<P>Además, en nuestro restaurante disponemos de menú diario y de una gran variedad de nuestros productos a la carta, que podrá degustar en cualquier momento, tales como Jamón Ibérico de bellota, Huevos rotos con jamón o Paletilla de cordero lechal de los montes de Guadarrama.
+								<P><br>Además, en nuestro restaurante disponemos de menú diario y de una gran variedad de nuestros productos a la carta, que podrá degustar en cualquier momento, tales como Jamón Ibérico de bellota, Huevos rotos con jamón o Paletilla de cordero lechal de los montes de Guadarrama.
 							</DIV>
 
 
 
 						</div>
 						<div class="  col-md-6">
-							<P><br><H1>NUESTROS SERVICIOS</H1></p></br>
+							<P><br><H1 style=color:darkblue;>NUESTROS SERVICIOS</H1></p></br>
 								<div id="myCarousel" class="carousel slide" data-ride="carousel">
 									<!-- Indicators -->
 									<ol class="carousel-indicators">

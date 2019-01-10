@@ -46,13 +46,13 @@ include('db.php');
 			<ul class="social-icons3">
 				<li><a href="https://www.facebook.com/" class="fa fa-facebook icon-border facebook"> </a></li>
 				<li><a href="https://twitter.com/" class="fa fa-twitter icon-border twitter"> </a></li>
-				<li><a href="https://plus.google.com/u/0/" class="fa fa-google-plus icon-border googleplus"> </a></li>
+				<li><a href="https://www.google.com/" class="fa fa-google-plus icon-border googleplus"> </a></li>
 			</ul>
 		</div>
 		<div class="contact-bnr-w3-agile">
 			<ul>
 
-				<li><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:hotelwebsite@hotmail.com">hotelwebsite@hotmail.com</a></li>
+				<li><i class="fa fa-envelope" aria-hidden="true"></i><a href="">hotelwebsite@hotmail.com</a></li>
 				<li><i class="fa fa-phone" aria-hidden="true"></i>+593 6532455</li>
 
 			</ul>
