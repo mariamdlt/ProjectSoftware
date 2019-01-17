@@ -130,24 +130,24 @@ include('../db.php');
 										<div class="item active">
 											<img src="images/fr1.jpg" alt="Comida para deleitar"style="width:100%;">
 											<div class="carousel-caption">
-												<h3>Los Angeles</h3>
-												<p>LA is always so much fun!</p>
+												<h3>Platos Típicos de la Costa y Sierra</h3>
+												<p>Ven y disfruta de tus vacaciones con nosotros!</p>
 											</div>
 										</div>
 
 										<div class="item">
 											<img src="images/fr3.jpg" alt="Chicago"style="width:100%;">
 											<div class="carousel-caption">
-												<h3>Chicago</h3>
-												<p>Thank you, Chicago!</p>
+												<h3>El costo está a tu alcance</h3>
+												<p>Ven y disfruta de tus vacaciones con nosotros!</p>
 											</div>
 										</div>
 
 										<div class="item">
 											<img src="images/fr2.jpg" alt="New York"style="width:100%;">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>El costo está a tu alcance</h3>
+												<p>Ven y disfruta de tus vacaciones con nosotros!</p>
 											</div>
 										</div>
 										<div class="item">
@@ -161,16 +161,16 @@ include('../db.php');
 										<div class="item">
 											<img src="images/fr5.jpg" alt="New York" style="width:100%;">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>Incluye desayuno y parqueadero</h3>
+												<p>Realiza tu reserva ahora mismo!</p>
 											</div>
 										</div>
 
 										<div class="item">
 											<img src="images/fr6.jpg" alt="New York" style="width:100%;">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>Incluye desayuno y parqueadero</h3>
+												<p>Realiza tu reserva ahora mismo!</p>
 											</div>
 										</div>
 

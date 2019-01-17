@@ -30,7 +30,7 @@ include('../db.php');
 	<link rel="stylesheet" href="css/chocolat.css" type="text/css" media="screen">
 	<link href="css/easy-responsive-tabs.css" rel='stylesheet' type='text/css'/>
 	<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" />
-	<link rel="stylesheet" href="css/jquery-ui.css" />
+	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 	<script type="text/javascript" src="js/modernizr-2.6.2.min.js"></script>
 	<!--fonts-->
@@ -38,9 +38,85 @@ include('../db.php');
 	<link href="//fonts.googleapis.com/css?family=Federo" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+
+
+
+
+<script>
+/**
+* Documentado en http://lwp-l.com/s2379
+*/
+function isValidDate(day,month,year)
+{
+var dteDate;
+month=month-1;
+dteDate=new Date(year,month,day);
+return ((day==dteDate.getDate()) && (month==dteDate.getMonth()) && (year==dteDate.getFullYear()));
+}
+
+/**
+* Funcion para validar una fecha
+* Tiene que recibir:
+* La fecha en formato español dd/mm/yyyy
+* Devuelve:
+* true o false
+*/
+function validate_fecha(fecha)
+{
+var patron=new RegExp("^(19|20)+([0-9]{2})([-])([0-9]{1,2})([-])([0-9]{1,2})$");
+
+if(fecha.search(patron)==0)
+{
+var values=fecha.split("-");
+if(isValidDate(values[2],values[1],values[0]))
+{
+return true;
+}
+}
+return false;
+}
+
+function calcularDias()
+{
+var fechaInicial=document.getElementById("fechaInicial").value;
+var fechaFinal=document.getElementById("fechaFinal").value;
+var resultado="";
+if(validate_fecha(fechaInicial) && validate_fecha(fechaFinal))
+{
+inicial=fechaInicial.split("-");
+final=fechaFinal.split("-");
+// obtenemos las fechas en milisegundos
+var dateStart=new Date(inicial[0],(inicial[1]-1),inicial[2]);
+var dateEnd=new Date(final[0],(final[1]-1),final[2]);
+
+if(dateStart<dateEnd)
+{
+// la diferencia entre las dos fechas, la dividimos entre 86400 segundos
+// que tiene un dia, y posteriormente entre 1000 ya que estamos
+// trabajando con milisegundos.
+var diasDif = dateEnd.getTime() - dateStart.getTime();
+resultado="Total de días: "+ (diasDif/86400000) +" ";
+
+}else{
+
+alert("La fecha inicial es posterior a la fecha final");
+
+}
+}else{
+if(!validate_fecha(fechaInicial))
+alert("La fecha inicial es incorrecta");
+if(!validate_fecha(fechaFinal))
+alert("La fecha final es incorrecta");
+}
+document.getElementById("dias").innerHTML=resultado;
+
+}
+</script>
+
+
 
 
 	<!--//fonts-->
@@ -93,76 +169,336 @@ include('../db.php');
 	<div class="container">
 		<body style="background-color:rgba(208, 231, 27, 0.65);">
 			<div class= "row">
-				<div class="col-md-7">
+				<div class="col-md-6">
 					<P><br>
-						<H1 style=color:darkblue;>BUSCA TU HABITACIÓN</H1></p>
+						<H1 style=color:darkblue;>Ingrese los datos de la reserva</H1></p>
 						<P style=color:red;><br><strong>NOTA: TODAS LAS HABITACIONES INCLUYEN DESAYUNO Y PARQUEADERO</strong></br></p>
 							<br>
-
-
-
-
-
-							<form action="/action_page.php">
-	  						<div class="form-group">
-	    						<label for="nadultos"> Adultos (15 USD):</label>
-	    						<select class="form-control" id="nadultos">
-										<option value=""> Seleccione número </option>
-										<option>1</option>
-    								<option>2</option>
-    								<option>3</option>
-    								<option>4</option>
-  							</select>
+							<form name="My_form" autocomplete="on"  action="reserva.php" method="post">
+								<div class="form-group">
+	    						<label for="fecha">Fecha actual:</label>
+	    						<input type="text" name="fecha"   class="form-control" value=<?php date_default_timezone_set('America/Guayaquil'); echo date("Y-m-d");?>  disabled>
 	  						</div>
-	  						<div class="form-group">
-	    						<label for="nniños"> Niños (10 USD):</label>
-	    						<select class="form-control" id="nniños">
-										<option value=""> Seleccione número </option>
-										<option>1</option>
-    								<option>2</option>
-    								<option>3</option>
-    								<option>4</option>
-									</select>
-	  						</div>
+								<br>
+								<script>
+													function solonumeros(e)
+																		{
+												 var key = window.event ? e.which : e.keyCode;
+																				if(key < 48 || key > 57)
+																						e.preventDefault();
+																		}
+																		</script>
 
 
 
 
 
-								<script type="text/javascript">
-								$(document).ready(function() {
-    						$("#datepicker").datepicker({
-									dateFormat: 'dd/mm/yy',
-    						}).datepicker("setDate", new Date());
-								});
-								</script>
+							<div class="row">
+								<div class="col-xs-6">
+								<div class="form-group">
+									<label for ="txtThabi">Tipo de Habitación </label>
+										<select name="txtThabi" class="form-control"id ="txtThabi">
+												<option value=""> Seleccione Tipo de Habitación </option>
+												 <option value="HABITACION INDIVIDUAL">Habitación individual</option>
+												 <option value="HABITACION DOBLE">Habitación doble</option>
+												 <option value="HABITACION FAMILIAR">Habitación Familiar</option>
+												 <option value="HABITACION MATRIMONIAL">Habitación Matrimonial</option>
+										</select>
+								</div>
+									</div>
+									<div class="col-xs-6">
+								<div class="form-group">
+									<label for ="txtTcama">Tipo de Cama</label>
+										<select name="txtTcama" class="form-control" id ="txtTcama">
+												<option value=""> Seleccione Tipo de Cama </option>
+												 <option value="CAMA SIMPLE">Cama simple</option>
+												 <option value="CAMA DOBLE">Cama doble</option>
+												 <option value="CAMA TRIPLE">Cama triple</option>
+										</select>
+								</div>
+										</div>
+												</div>
 
 								<div class="form-group">
-	    						<label for="fecha">Fecha:</label>
-	    						<input type="text" name="fecha" id="datepicker"  readonly="readonly" disabled size="10" />
+									<input type="submit" name="search" class="btn btn-sm btn-primary"  value="Buscar habitacion">
+								</div>
 
 
-	  						</div>
+</form>
 
-	  						<div class="checkbox">
-	    						<label><input type="checkbox"> Remember me</label>
-	  						</div>
-	  						<button type="submit" class="btn btn-default">Submit</button>
+<div class="panel panel-default">
+<div class="panel-body">
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+		<thead>
+				<tr>
+						<th>Cod.</th>
+						<th>Nombre</th>
+						<th>Tipo habitacion</th>
+						<th>Tipo cama</th>
+						<th>No.Camas</th>
+						<th>Accion</th>
+
+				</tr>
+		</thead>
+		<tbody>
+									<?php
+									include('../db.php');
+						if(isset($_POST['search']))
+						{
+								 $troom = $_POST['txtThabi'];
+								 $tbed = $_POST['txtTcama'];
+								 $estado = 'DISPONIBLE';
+								 $check="SELECT * FROM habitacion WHERE HABI_THABI = '$troom' AND 	HABI_TCAMAS = '$tbed' AND ESTA_NOMBRE='DISPONIBLE'";
+								 $rs = mysqli_query($con,$check);
+								 while($trow=mysqli_fetch_array($rs) )
+								 {
+									 $nomh=$trow['HABI_NOMBRE'];
+									 $serv=$trow['HABI_SERVICIOS'];
+									 $ncama=$trow['HABI_NCAMAS'];
+									 $cod1=$trow['HABI_ID'];
+									 $thabit=$trow['HABI_THABI'];
+									 $sqlc ="INSERT INTO `cliente`( `CLIE_THABI`,`CLIE_TCAMAS`) VALUES ('$troom','$tbed')" ;
+									if($rsc=mysqli_query($con,$sqlc)){
+										$last_id = $con->insert_id;
+									}
+									$sqlf="INSERT INTO `factura`( `CLIE_ID`) VALUES ('$last_id')" ;
+									$rscf=mysqli_query($con,$sqlf);
 
 
-							</form>
+
+									 echo"<tr>
+										 <th>".$trow['HABI_ID']."</th>
+										 <th>".$trow['HABI_NOMBRE']."</th>
+										 <th>".$trow['HABI_THABI']."</th>
+										 <th>".$trow['HABI_TCAMAS']."</th>
+										 <th>".$trow['HABI_NCAMAS']."</th>
+										 <td><button class='btn btn-primary btn' data-toggle='modal' data-target='#myModal'>
+															 Ver
+													</button></td>";
+
+									 }
+								 }
+?>
+
+			 </tbody>
+</table>
+</div>
+</div>
+</div>
+<form name="My_form1" autocomplete="on"  action="reserva.php" method="post">
+<div class="row">
+	<div class="col-xs-6">
+		<div class="form-group">
+			<label for="nadultos"> Adultos (15 USD):</label>
+			<input type="text" name="nadultos"   class="form-control" id= "nadultos" onkeypress="solonumeros(event);" placeholder="Ingrese número de adultos" required>
+		</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-xs-6">
+			<label for="nninos"> Niños (15 USD):</label>
+			<input type="text" name="nninos"   class="form-control" id= "nninos" onkeypress="solonumeros(event);" placeholder="Ingrese número de adultos" required>
+		</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="nnombre"> Nombres (15 USD):</label>
+				<input type="text" name="nnombre"   class="form-control" id= "nnombre " required>
+			</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-xs-6">
+				<label for="ncedula"> Cédula (15 USD):</label>
+				<input type="text" name="ncedula"   class="form-control" id= "ncedula" onkeypress="solonumeros(event);" placeholder="Ingrese número de cédula" required>
+			</div>
+			</div>
+		</div>
 
 
 
 
 
-						<DIV ALIGN="justify"><P>
-						</DIV>
 
 
 
+	<div class="row">
+		<div class="col-xs-6">
+	<div class="form-group">
+		<label for="fechaInicial">Fecha de llegada:</label>
+		<input type="date" name="fechaInicial"   class="form-control" id= "fechaInicial" value=<?php echo date('Y-m-d');?>>
+	</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-6">
+		<label for="fechaFinal">Fecha de salida:</label>
+		<input type="date" name="fechaFinal"   class="form-control" id= "fechaFinal" value=<?php echo date('Y-m-d');?>/>
+	</div>
+	</div>
+	</div>
+	<div class="form-group">
+		<input type="button" name="sub" class="btn btn-sm btn-primary"  value="Verficar fecha" onclick="calcularDias()">
+	</div>
+
+	<div class="form-group">
+		<input type="submit" name="register" class="btn btn-sm btn-primary"  value="Registrar">
+	</div>
+</div>
+</form>
+<?php
+include('../db.php');
+$resultad = mysqli_query($con, "SELECT MAX(CLIE_ID) AS 'CLIE_ID' from `cliente` ");
+
+$fila = mysqli_fetch_assoc($resultad);
+$fila['CLIE_ID'];
+
+$res = mysqli_query($con, "SELECT CLIE_ID from cliente order by CLIE_ID desc");
+$fila = mysqli_fetch_array($res);
+$max=$fila['CLIE_ID'];
+
+
+$resultadh = mysqli_query($con, "SELECT MAX(DET_ID) AS 'DET_ID' from `detalle` ");
+
+$filah = mysqli_fetch_assoc($resultadh);
+$filah['DET_ID'];
+
+$resh = mysqli_query($con, "SELECT DET_ID from detalle order by DET_ID desc");
+$filah = mysqli_fetch_array($resh);
+$maxh=$filah['DET_ID'];
+
+
+
+
+
+
+
+
+
+if(isset($_POST['register']))
+{
+	$fechaInicial	= $_POST["fechaInicial"];//Escanpando caracteres
+	$fechaFinal	 = $_POST["fechaFinal"];//Escanpando caracteres
+	$nninos	 = $_POST["nninos"];//Escanpando caracteres
+	$nadultos	 = $_POST["nadultos"];
+	$nnombre	 = $_POST["nnombre"];
+	$ncedula	 =$_POST["ncedula"];
+
+	$updatec = mysqli_query($con, "UPDATE cliente SET CLIE_NOMBRES='$nnombre', CLIE_CEDULA='$ncedula', CLIE_NADULTOS='$nadultos', CLIE_NNINIO='$nninos', CLIE_FLLEGADA='$fechaInicial', CLIE_FSALIDA='$fechaFinal' WHERE CLIE_ID='$max'") or die(mysqli_error());
+	if($updatec){
+
+
+		$updated = mysqli_query($con, "UPDATE habitacion inner join detalle on habitacion.HABI_ID=detalle.HABI_ID set habitacion.ESTA_NOMBRE='RESERVADO' WHERE detalle.DET_ID='$maxh'") or die(mysqli_error());
+		echo "<script>alert('La reserva se logró con éxito!');window.location = 'reserva.php'</script>'";
+	}
+}
+
+ ?>
+
+
+
+<div class="panel-body">
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Información de Habitación</h4>
+				</div>
+				<form method="post">
+					<div class="modal-body">
+            <div class="form-group">
+              <label>Código de Habitación:</label>
+                <input name="cod1" value="<?php echo $cod1; ?>" class="form-control" readonly>
 						</div>
-						<div class="  col-md-5">
+					</div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Habitación:</label>
+                <input name="nomh" value="<?php echo $nomh; ?>" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Tipo de Habitación</label>
+								<input name="troom" value="<?php echo $troom ; ?>" class="form-control" readonly>
+										</div>
+						</div>
+					<div class="modal-body">
+							<div class="form-group">
+								<label>Tipo de Cama</label>
+									<input name="tbed" value="<?php echo $tbed ; ?>" class="form-control" readonly>
+											</div>
+					</div>
+					<div class="modal-body">
+							<div class="form-group">
+								<label>Número de Camas</label>
+									<input name="ncama" value="<?php echo $ncama ; ?>" class="form-control" readonly>
+											</div>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Servicios</label>
+								<input name="serv" value="<?php echo $serv ; ?>" class="form-control" readonly>
+										</div>
+					</div>
+					<div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								<input type="submit" name="up" value="Update" class="btn btn-primary">
+				</form>
+
+				<?php
+				include('../db.php');
+				$resultaf= mysqli_query($con, "SELECT MAX(FACT_ID) AS 'FACT_ID' from `factura` ");
+
+				$filaf = mysqli_fetch_assoc($resultaf);
+    $filaf['FACT_ID'];
+
+		$resf = mysqli_query($con, "SELECT FACT_ID from factura order by FACT_ID desc");
+      $filaf = mysqli_fetch_array($resf);
+				$maxf=$filaf['FACT_ID'];
+	
+
+				if(isset($_POST['up']))
+				{
+					$cod1=$_POST["cod1"];
+					$sel="SELECT * FROM `habitacion` WHERE HABI_ID= '$cod1' AND HABI_THABI='$thabit' AND  HABI_TCAMAS='$tcama1'";
+					$r = mysqli_query($con,$sel);
+					$data = mysqli_fetch_array($r);
+					$sqd ="INSERT INTO `detalle`(`FACT_ID`,`HABI_ID`) VALUES ('$maxf','$cod1')" ;
+
+					if(mysqli_query($con,$sqd))
+									{
+
+
+									echo' <script language="javascript" type="text/javascript"> alert("Habitación Seleccionada"); window.location = "reserva.php"</script>';
+
+									}
+								}
+
+
+								ob_end_flush();
+				?>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+						<div class="  col-md-6">
 							<P><br><H1 style=color:darkblue;>NUESTROS SERVICIOS</H1></p></br>
 								<div id="myCarousel" class="carousel slide" data-ride="carousel">
 									<!-- Indicators -->
@@ -184,47 +520,47 @@ include('../db.php');
 										<div class="item active">
 											<img src="images/fr1.jpg" alt="Comida para deleitar"style="width:100%;">
 											<div class="carousel-caption">
-												<h3>Los Angeles</h3>
-												<p>LA is always so much fun!</p>
+												<h3>Platos Típicos de la Costa y Sierra</h3>
+												<p>Ven y disfruta de tus vacaciones con nosotros!</p>
 											</div>
 										</div>
 
 										<div class="item">
 											<img src="images/fr3.jpg" alt="Chicago"style="width:100%;">
 											<div class="carousel-caption">
-												<h3>Chicago</h3>
-												<p>Thank you, Chicago!</p>
+												<h3>Incluye desayuno y parqueadero</h3>
+												<p>Ven y disfruta de tus vacaciones con nosotros!</p>
 											</div>
 										</div>
 
 										<div class="item">
 											<img src="images/fr2.jpg" alt="New York"style="width:100%;">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>Incluye desayuno</h3>
+												<p>Gracias por preferirnos!</p>
 											</div>
 										</div>
 										<div class="item">
 											<img src="images/fr4.jpg" alt="New York" style="width:100%">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>El costo está a tu alcance</h3>
+												<p>Ven y disfruta de tus vacaciones con nosotros!</p>
 											</div>
 										</div>
 
 										<div class="item">
 											<img src="images/fr5.jpg" alt="New York" style="width:100%;">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>Habitaciones con buen ambiente</h3>
+												<p>Gracas por preferirnos!</p>
 											</div>
 										</div>
 
 										<div class="item">
 											<img src="images/fr6.jpg" alt="New York" style="width:100%;">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>Disfruta de tus vacaciones con nosostros</h3>
+												<p>Realiza tu reserva ahora mismo!</p>
 											</div>
 										</div>
 
@@ -247,8 +583,8 @@ include('../db.php');
 										<div class="item">
 											<img src="images/fr8.jpg" alt="New York" style="width:100%;">
 											<div class="carousel-caption">
-												<h3>New York</h3>
-												<p>We love the Big Apple!</p>
+												<h3>Reserva tu habitación</h3>
+												<p>Ahora mismo!</p>
 											</div>
 										</div>
 
@@ -272,7 +608,6 @@ include('../db.php');
 									</a>
 								</div>
 							</div>
-						</div>
 					</div>
 				</div>
 			</body>
